@@ -6,6 +6,4 @@ from .models import Cart
 @receiver(post_save, sender=User)
 def create_user_cart(sender, instance, created, **kwargs):
     if created:
-        print('invoked')
-        print(instance)
         Cart.objects.create(user=instance)

@@ -8,7 +8,7 @@ class CartInline(admin.StackedInline):
     verbose_name_plural = 'Cart'
 
 class CartModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'updated_at')
+    list_display = ('user', 'updated_at')
     # ordering = ['updated_at', 'id']
 
 admin.site.register(Cart, CartModelAdmin)
