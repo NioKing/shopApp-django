@@ -12,7 +12,7 @@ class User(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
-    password_hash = models.CharField(max_length=40, validators=[MinLengthValidator(6)])
+    password = models.CharField(max_length=40, validators=[MinLengthValidator(6)])
     hashed_rt = models.CharField(null=True, max_length=255)
     role = models.CharField(max_length=20, choices=UserRoles, default=UserRoles.CUSTOMER)
 
@@ -22,4 +22,3 @@ class User(models.Model):
 
     def __str__(self):
         return self.email
-    
