@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework import generics, status
 from .models import Product
 from .serializers import ProductSerializer
-
+from django.views.decorators.cache import cache_page
 
 # class ProductListCreate(generics.ListCreateAPIView):
 #     queryset = Product.objects.all()
@@ -12,7 +12,7 @@ from .serializers import ProductSerializer
 # class ProductRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 #     queryset = Product.objects.all()
 #     serializer_class = ProductSerializer
-
+@cache_page(60)
 @api_view(['GET', 'POST'])
 def product_list_create(request):
     if request.method == 'GET':
@@ -27,6 +27,8 @@ def product_list_create(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+@cache_page(60)
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 def product_retrieve_updata_delete(request, pk):
     try:
@@ -50,3 +52,4 @@ def product_retrieve_updata_delete(request, pk):
         product.delete()
         print(serializer.data)
         return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+
