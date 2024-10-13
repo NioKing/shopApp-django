@@ -14,6 +14,7 @@ from pathlib import Path
 import dj_database_url
 from datetime import timedelta
 import os
+import dj_database_url
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -32,6 +33,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'authentication.User'
 
 # Application definition
 
@@ -93,13 +95,9 @@ WSGI_APPLICATION = 'shopApp.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    'default': dj_database_url.config(default=os.environ['DATABASE_URL'], engine='django_cockroachdb')
     }
-}
 
 CACHES = {
     "default": {
