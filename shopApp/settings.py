@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'shopApp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ['DATABASE_URL'], engine='django_cockroachdb')
+    'default': dj_database_url.config(default=os.environ['DATABASE_URL'], engine='django_cockroachdb'),
     }
 
 CACHES = {

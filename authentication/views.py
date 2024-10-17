@@ -28,3 +28,9 @@ def get_user_data(request, pk):
         return Response({"message": "User not found"}, status=404)
 
 
+@api_view(['GET'])
+def get_all_users(request):
+    if request.method == 'GET':
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)

@@ -4,7 +4,7 @@ from .models import User
 
 class UserAdmin(admin.ModelAdmin):
     inlines = [CartInline]
-    list_display = ['email', 'role']
+    list_display = ['email','id','role']
     fields = ('email', 'role', 'is_active', 'is_staff')
 
 

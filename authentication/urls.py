@@ -7,4 +7,5 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('register/', register, name="register"),
     path('<str:pk>/', get_user_data, name="get-user-data"),
+    path('user/', get_all_users, name="get-user-data")
 ]
