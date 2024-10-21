@@ -5,7 +5,7 @@ from .models import User
 class UserAdmin(admin.ModelAdmin):
     inlines = [CartInline]
     list_display = ['email','id','role']
-    fields = ('email', 'role', 'is_active', 'is_staff')
+    fields = ('email', 'role', 'is_active', 'is_staff', "password")
 
 
 admin.site.register(User, UserAdmin)

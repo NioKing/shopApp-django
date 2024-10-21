@@ -72,9 +72,12 @@ INSTALLED_APPS = [
     # 'health_check.contrib.rabbitmq',            # requires RabbitMQ broker
     'health_check.contrib.redis',               # requires Redis broker
 
+    'django_prometheus',
+
 ]
 
 MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -82,6 +85,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     # 'shopApp.middleware.redirect_url.RedirectInvalidURLMiddleware'
 ]
 
@@ -190,3 +194,6 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = os.getenv("EMAIL_PORT")
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+# prometheus vars
+PROMETHEUS_METRIC_NAMESPACE = "shopApp"

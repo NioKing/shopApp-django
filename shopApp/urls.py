@@ -15,4 +15,5 @@ urlpatterns = [
         path('products/', include('product.urls')),
         path('search/', include('search.urls')),
     ])),
+    path('', include('django_prometheus.urls')),
 ]

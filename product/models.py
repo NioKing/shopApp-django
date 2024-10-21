@@ -1,9 +1,9 @@
 from django.db import models
 from category.models import Category
 from django.utils.translation import gettext_lazy as _
+from django_prometheus.models import ExportModelOperationsMixin
 
-
-class Product(models.Model):
+class Product(ExportModelOperationsMixin('product'),models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=8, decimal_places=2)
     categories = models.ManyToManyField(Category, related_name="products")

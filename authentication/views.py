@@ -8,8 +8,15 @@ from .models import User
 def register(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=201)
+        email = serializer.validated_data['email']
+        password = serializer.validated_data['password']
+        
+        try:
+            user = User.objects.create_user(email=email, password=password)
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
+        user_serializer = UserSerializer(user)
+        return Response(user_serializer.data, status=201)
     return Response(serializer.errors, status=400)
 
 
