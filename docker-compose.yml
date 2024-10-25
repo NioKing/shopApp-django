@@ -1,8 +1,30 @@
-version: '3.8'
-
 services:
   redis:
     image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - .:/usr/src/app/redis_data
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_storage:/var/lib/grafana
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    depends_on:
+      - grafana
 
   django:
     container_name: django
@@ -17,3 +39,8 @@ services:
       - .env
     depends_on:
       - redis
+      - grafana
+
+volumes:
+  grafana_storage:
+  prometheus_data:

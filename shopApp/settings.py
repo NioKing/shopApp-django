@@ -11,11 +11,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-import dj_database_url
+import dj_database_url # type: ignore
 from datetime import timedelta
 import os
-import dj_database_url
-from dotenv import load_dotenv
+import dj_database_url # type: ignore
+from dotenv import load_dotenv # type: ignore
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
