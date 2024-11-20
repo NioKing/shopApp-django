@@ -18,8 +18,8 @@ import dj_database_url # type: ignore
 from dotenv import load_dotenv # type: ignore
 load_dotenv()
 import logging
-from pythonjsonlogger import jsonlogger # type: ignore
-from logstash import TCPLogstashHandler # type: ignore
+# from pythonjsonlogger import jsonlogger # type: ignore
+# from logstash import TCPLogstashHandler # type: ignore
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
