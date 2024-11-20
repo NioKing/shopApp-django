@@ -17,6 +17,10 @@ import os
 import dj_database_url # type: ignore
 from dotenv import load_dotenv # type: ignore
 load_dotenv()
+import logging
+# from pythonjsonlogger import jsonlogger # type: ignore
+# from logstash import TCPLogstashHandler # type: ignore
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -70,7 +74,7 @@ INSTALLED_APPS = [
     'health_check.contrib.psutil',              # disk and memory utilization; requires psutil
     'health_check.contrib.s3boto3_storage',     # requires boto3 and S3BotoStorage backend
     # 'health_check.contrib.rabbitmq',            # requires RabbitMQ broker
-    'health_check.contrib.redis',               # requires Redis broker
+    # 'health_check.contrib.redis',               # requires Redis broker
 
     'django_prometheus',
 
@@ -158,6 +162,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Media settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -197,3 +206,73 @@ EMAIL_USE_SSL = False
 
 # prometheus vars
 PROMETHEUS_METRIC_NAMESPACE = "shopApp"
+
+# ssl settings
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_HSTS_SECONDS = 31536000  # 1 year
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+
+
+# logging
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'json': {
+#             '()': 'pythonjsonlogger.jsonlogger.JsonFormatter',
+#             'format': '%(asctime)s %(name)s %(levelname)s %(message)s',
+#         },
+#     },
+#     'handlers': {
+#         'logstash': {
+#             'level': 'DEBUG',
+#             'class': 'logstash.TCPLogstashHandler',
+#             'host': 'localhost',
+#             'port': 5000,
+#             'version': 1,
+#             'message_type': 'django',
+#             'fqdn': False,
+#             'tags': ['django'],
+#             'formatter': 'json',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['logstash'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }
+
+LOG_PATH = os.path.join(BASE_DIR, 'logs')
+os.makedirs(LOG_PATH, exist_ok=True)
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+        "file": {
+            "level": os.getenv("DJANGO_LOG_LEVEL"),
+            "class": "logging.FileHandler",
+            "filename": os.path.join(LOG_PATH, "debug.log"),
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console","file"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
+        },
+    },
+}
