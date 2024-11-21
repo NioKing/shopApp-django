@@ -5,13 +5,6 @@ from .models import Product
 from .serializers import ProductSerializer
 from django.views.decorators.cache import cache_page
 
-# class ProductListCreate(generics.ListCreateAPIView):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
-
-# class ProductRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
 @cache_page(60)
 @api_view(['GET', 'POST'])
 def product_list_create(request):
